@@ -6,11 +6,10 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -43,27 +42,28 @@ public class UserServiceRestEndpoint {
     @Context
     private HttpServletRequest httpRequest;
     
-    @GET
-    @Path("{domain}")
-    public JsonObject authenticateUser(
+    @POST
+    @Path("{domain}/{userId}/authenticate")
+    public JsonObject authenticateUserX(
             @PathParam("domain") String domain,
-            @QueryParam("userId") String userId, 
-            @QueryParam("password") String password) {
+            @PathParam("userId") String userId, 
+            JsonObject jsonObject) {
         logger.info("Authentication request: {}", uriInfo.getRequestUri());
         User user;
         try {
+            String password = jsonObject.getString("password");
             user = userService.authenticateUser(domain, userId, password);
         } catch (AuthenticationException ex) {
             throw new WebApplicationException(Response
                     .status(Response.Status.UNAUTHORIZED)
-                    .entity(ex.getMessage())
+                    .entity(mapToJson(ex.getMessage()))
                     .type(MediaType.APPLICATION_JSON)
                     .build());
         }
         return mapToJson(user);
     }
     
-    private JsonObject mapToJson(User user) {
+    private static JsonObject mapToJson(User user) {
         return Json.createObjectBuilder()
                 .add("name", user.name)
                 .add("role", user.role)
@@ -72,4 +72,9 @@ public class UserServiceRestEndpoint {
             .build();
     }
     
+    private static JsonObject mapToJson(String errorMessage) {
+        return Json.createObjectBuilder()
+                .add("errorMessage", errorMessage)
+            .build();
+    }
 }

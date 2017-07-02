@@ -1,0 +1,31 @@
+{
+	"variables": [],
+	"info": {
+		"name": "kits-user-service",
+		"_postman_id": "acae37ef-ffcc-5c99-0e65-3b47759c7f94",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "local authentication",
+			"request": {
+				"url": "localhost:5001/user/kits/ksanyi/authenticate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"xxx\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
