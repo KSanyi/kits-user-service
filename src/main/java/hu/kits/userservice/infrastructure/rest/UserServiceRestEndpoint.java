@@ -44,15 +44,15 @@ public class UserServiceRestEndpoint {
     
     @POST
     @Path("{domain}/{userId}/authenticate")
-    public JsonObject authenticateUserX(
+    public JsonObject authenticateUser(
             @PathParam("domain") String domain,
             @PathParam("userId") String userId, 
             JsonObject jsonObject) {
         logger.info("Authentication request: {}", uriInfo.getRequestUri());
-        User user;
         try {
             String password = jsonObject.getString("password");
-            user = userService.authenticateUser(domain, userId, password);
+            User user = userService.authenticateUser(domain, userId, password);
+            return mapToJson(user);
         } catch (AuthenticationException ex) {
             throw new WebApplicationException(Response
                     .status(Response.Status.UNAUTHORIZED)
@@ -60,7 +60,26 @@ public class UserServiceRestEndpoint {
                     .type(MediaType.APPLICATION_JSON)
                     .build());
         }
-        return mapToJson(user);
+    }
+    
+    @POST
+    @Path("{domain}/{userId}/change-password")
+    public void changePassword(
+            @PathParam("domain") String domain,
+            @PathParam("userId") String userId, 
+            JsonObject jsonObject) {
+        logger.info("Password change request: {}", uriInfo.getRequestUri());
+        try {
+            String oldPassword = jsonObject.getString("oldPassword");
+            String newPassword = jsonObject.getString("newPassword");
+            userService.changePassword(domain, userId, oldPassword, newPassword);
+        } catch (AuthenticationException ex) {
+            throw new WebApplicationException(Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(mapToJson(ex.getMessage()))
+                    .type(MediaType.APPLICATION_JSON)
+                    .build());
+        }
     }
     
     private static JsonObject mapToJson(User user) {

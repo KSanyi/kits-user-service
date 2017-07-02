@@ -18,7 +18,7 @@ public class UserService {
 
     public User authenticateUser(String domain, String userId, String password) throws AuthenticationException {
         
-        logger.debug("Authentication request for {} with user id {}", domain, userId);
+        logger.debug("Authentication request in domain '{}' for user '{}'", domain, userId);
         
         Optional<User> oUser = userRepository.loadUser(domain, userId);
         if(oUser.isPresent()) {
@@ -42,6 +42,17 @@ public class UserService {
             logger.info("Authentication failure. User with user id '{}' not found", userId);
             throw new AuthenticationException();
         }
+    }
+    
+    public void changePassword(String domain, String userId, String oldPassword, String newPassword) throws AuthenticationException {
+        
+        logger.info("Password change request in domain '{}' for user '{}'", domain, userId);
+        
+        authenticateUser(domain, userId, oldPassword);
+        
+        userRepository.changePassword(domain, userId, PasswordHasher.hash(newPassword));
+        
+        logger.info("Successful password change for '{}'", userId);
     }
     
 }

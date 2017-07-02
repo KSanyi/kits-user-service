@@ -37,6 +37,23 @@ public class UserServiceTest {
         userService.authenticateUser("kits", "joe", "jjj");
     }
     
+    public void changePassword() throws AuthenticationException {
+        
+        userService.changePassword("kits", "ksanyi", "xxx", "yyy");
+    }
+    
+    @Test(expected = AuthenticationException.class)
+    public void wrongPasswordChange() throws AuthenticationException {
+        
+        userService.changePassword("kits", "ksanyi", "aaa", "yyy");
+    }
+    
+    @Test(expected = AuthenticationException.class)
+    public void inactivatedUserPasswordChange() throws AuthenticationException {
+        
+        userService.changePassword("kits", "joe", "jjj", "yyy");
+    }
+    
 }
 
 class FakeUserRepository implements UserRepository {
@@ -50,6 +67,10 @@ class FakeUserRepository implements UserRepository {
     @Override
     public Optional<User> loadUser(String domain, String userId) {
         return users.stream().filter(u -> u.userId.equals(userId)).findAny();
+    }
+
+    @Override
+    public void changePassword(String domain, String userId, String newPassword) {
     }
     
 }

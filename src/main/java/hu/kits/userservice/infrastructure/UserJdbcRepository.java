@@ -43,4 +43,12 @@ public class UserJdbcRepository implements UserRepository {
         return user;
     }
 
+    @Override
+    public void changePassword(String domain, String userId, String newPasswordHash) {
+        databaseClient.update(
+                "UPDATE " + TABLE_USER + " SET " + COLUMN_PASSWORD_HASH + " = :newPasswordHash WHERE " + COLUMN_DOMAIN + " = :domain AND " + COLUMN_USERID + " = :userId",
+                new DataMap("domain", domain, "userId", userId, "newPasswordHash", newPasswordHash));
+        
+    }
+
 }

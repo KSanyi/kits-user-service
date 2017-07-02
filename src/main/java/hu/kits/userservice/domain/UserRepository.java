@@ -6,4 +6,6 @@ public interface UserRepository {
 
     Optional<User> loadUser(String domain, String userId);
 
+    void changePassword(String domain, String userId, String newPasswordHash);
+
 }

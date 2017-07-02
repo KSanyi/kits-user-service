@@ -39,4 +39,14 @@ public class UserJdbcRepositoryTest {
         Assert.assertTrue(u.isActive);
     }
     
+    @Test
+    public void updatePassword() {
+        
+        userRepository.changePassword("kits", "ksanyi", "yyyhashed");
+        
+        Optional<User> user = userRepository.loadUser("kits", "ksanyi");
+        Assert.assertTrue(user.isPresent());
+        Assert.assertEquals("yyyhashed", user.get().passwordHash);
+    }
+    
 }
