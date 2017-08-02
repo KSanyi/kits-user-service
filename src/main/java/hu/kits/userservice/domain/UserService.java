@@ -25,8 +25,7 @@ public class UserService {
             
             User user = oUser.get();
             
-            String hashedPassword = PasswordHasher.hash(password);
-            if(hashedPassword.equals(user.passwordHash)) {
+            if(PasswordHasher.checkPassword(user.passwordHash, password)) {
                 if(user.isActive) {
                     logger.info("Authentication success for user '{}'", userId);
                     return user;
@@ -50,7 +49,7 @@ public class UserService {
         
         authenticateUser(domain, userId, oldPassword);
         
-        userRepository.changePassword(domain, userId, PasswordHasher.hash(newPassword));
+        userRepository.changePassword(domain, userId, PasswordHasher.createNewPasswordHash(newPassword));
         
         logger.info("Successful password change for '{}'", userId);
     }
