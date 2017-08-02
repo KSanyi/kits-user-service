@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class UserService {
 
-    private final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
     private final UserRepository userRepository;
     
