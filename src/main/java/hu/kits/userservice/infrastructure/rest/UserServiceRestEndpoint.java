@@ -82,6 +82,16 @@ public class UserServiceRestEndpoint {
         }
     }
     
+    @POST
+    @Path("{domain}/{userId}/generate-password")
+    public JsonObject generateNewPassword(
+            @PathParam("domain") String domain,
+            @PathParam("userId") String userId) {
+        logger.info("Password change request: {}", uriInfo.getRequestUri());
+        String newPassword = userService.generateNewPassword(domain, userId);
+        return Json.createObjectBuilder().add("newPassword", newPassword).build();
+    }
+    
     private static JsonObject mapToJson(User user) {
         return Json.createObjectBuilder()
                 .add("name", user.name)

@@ -54,4 +54,17 @@ public class UserService {
         logger.info("Successful password change for '{}'", userId);
     }
     
+    public String generateNewPassword(String domain, String userId) {
+        
+        logger.info("New password generation request in domain '{}' for user '{}'", domain, userId);
+        
+        String newPassword = PasswordGenerator.generateRandomPassword();
+        
+        userRepository.changePassword(domain, userId, PasswordHasher.createNewPasswordHash(newPassword));
+        
+        logger.info("Successful password generation for '{}'", userId);
+        
+        return newPassword;
+    }
+    
 }

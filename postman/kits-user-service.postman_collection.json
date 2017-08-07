@@ -26,6 +26,66 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "local password change",
+			"request": {
+				"url": "localhost:5001/user/kits/ksanyi/change-password",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"oldPassword\": \"xxx\",\n\t\"newPassword\": \"yyy\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "heroku authentication",
+			"request": {
+				"url": "https://kits-user-service.herokuapp.com/user/lae/skocso/authenticate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"xxx\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "heroku password change",
+			"request": {
+				"url": "https://kits-user-service.herokuapp.com/user/lae/skocso/change-password",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"oldPassword\": \"xxx\",\n\t\"newPassword\": \"yyy\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
