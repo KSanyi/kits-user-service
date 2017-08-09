@@ -60,8 +60,8 @@ class FakeUserRepository implements UserRepository {
 
     private List<User> users = new ArrayList<>();
     {
-        users.add(new User("ksanyi", "xxxhashed", "Kocso Sanyi", "admin", "+3670369999", "ksanyi@gmail.com", true));
-        users.add(new User("joe", "jjjhashed", "Joe Dow", "employee", "+3620369999", "joe7893@gmail.com", false));
+        users.add(new User("ksanyi", "leNMO6yYO0KUHMUoodjRfA==:AIBfoIwvymiGu7BGPwRav1GcuktTOECa6cGYWiYKWdc=", "Kocso Sanyi", "admin", "+3670369999", "ksanyi@gmail.com", true));
+        users.add(new User("joe", "wwQaoRoGK+vkS71sSL5ssg==:i3otXubPoJBVL0gdIDTPQ8cD906seUd2/BZdKRdmuWw=", "Joe Dow", "employee", "+3620369999", "joe7893@gmail.com", false));
     }
     
     @Override
